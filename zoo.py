@@ -2,16 +2,14 @@ import sqlite3
 from random import randrange
 
 
-species_list = ['lion', 'tiger', 'red panda', 'kangaroo', 'koala',
-                'raccoon', 'baboon', 'impala', 'hippo', 'cougar', 'goat']
-
-
 class Zoo():
 
     def __init__(self):
         self.capacity = 0
         self.budget = 0
         self.animals = []
+        self.species_list = ['lion', 'tiger', 'red panda', 'kangaroo', 'koala',
+                'raccoon', 'baboon', 'impala', 'hippo', 'cougar', 'goat']
 
     def get_capacity(self):
         return self.capacity
@@ -23,7 +21,13 @@ class Zoo():
         return self.animals
 
     def get_income(self):
-        pass
+        conn = sqlite3.connect('animal.db')
+        cursor = conn.cursor()
+        income = 0
+        result = cursor.execute('SELECT name FROM animals WHERE name != 0')
+        for row in result:
+            income += 60
+        return income
 
     def get_newborn_weight(self, species):
         conn = sqlite3.connect('animals.db')
@@ -52,7 +56,7 @@ class Zoo():
     def give_birth(self):
         conn = sqlite3.connect('animal.db')
         cursor = conn.cursor()
-        for species in species_list:
+        for species in self.species_list:
             male = False
             female = 0
             query = 'SELECT gender FROM animals WHERE species = ?'
