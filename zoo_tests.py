@@ -17,7 +17,14 @@ class TestZoo(unittest.TestCase):
         self.assertEqual(10, self.myZoo.get_budget())
 
     def test_get_animals(self):
-        self.assertEqual(['New'], self.myZoo.get_animals())
+        self.assertEqual(['Tiger'], self.myZoo.get_animals())
+
+    def test_give_birth(self):
+        self.assertEqual(1, self.myZoo.give_birth())
+
+#    def test_accommodate(self):
+#        self.myZoo.accommodate('horse', 'horsy', 2, 10)
+
 
 if __name__ == '__main__':
     unittest.main()
