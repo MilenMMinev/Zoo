@@ -9,7 +9,7 @@ class Zoo():
         self.budget = 0
         self.animals = []
         self.species_list = ['lion', 'tiger', 'red panda', 'kangaroo', 'koala',
-                'raccoon', 'baboon', 'impala', 'hippo', 'cougar', 'goat']
+                             'raccoon', 'baboon', 'impala', 'hippo', 'cougar', 'goat']
 
     def get_capacity(self):
         return self.capacity
@@ -47,11 +47,22 @@ class Zoo():
     def create_kid(self, species):
         conn = sqlite3.connect('animal.db')
         cursor = conn.cursor()
+        baby_name = input(
+            'Congratulations a baby was born! What should its name be')
         query = 'INSERT INTO animals (species, age, name, gender, weight) VALUES(?, 0, ?, ?, ?)'
         cursor.execute(query,
-                       (species, 'Mnew', self.generate_random_gender(), self.get_newborn_weight(species)))
+                       (species, baby_name, self.generate_random_gender(), self.get_newborn_weight(species)))
         conn.commit()
         conn.close()
+
+    def get_gestation_period(self, species):
+        conn = sqlite3.connect('animals.db')
+        cursor = conn.cursor()
+        query = 'SELECT gestation_period FROM animals WHERE species = ?'
+        result = cursor.execute(query, (species, )).fetchone()
+        return result[0]
+
+
 
     def give_birth(self):
         conn = sqlite3.connect('animal.db')

@@ -56,7 +56,7 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(1.2, self.tiger.eat())
         self.assertEqual(2500, self.hippo.eat())
 
-    def test_death(self):  # it works! trust me
+    def test_death(self):  # it works
         pass
 
 
