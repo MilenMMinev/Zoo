@@ -56,8 +56,17 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(1.2, self.tiger.eat())
         self.assertEqual(2500, self.hippo.eat())
 
-    def test_death(self):  # it works
-        pass
+    def test_get_gestation_period(self):
+        self.assertEqual(4, self.tiger.get_gestation_period())
+        self.assertEqual(8, self.hippo.get_gestation_period())
+
+    def test_ready_to_reproduce(self):
+        self.assertFalse(self.tiger.ready_to_reproduce())
+
+    def test_ready_to_give_birth(self):
+        self.assertFalse(self.tiger.ready_to_give_birth())
+
+
 
 
 if __name__ == '__main__':
