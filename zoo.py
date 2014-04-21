@@ -82,7 +82,7 @@ class Zoo():
 
     def create_baby(self, species, cursor):
         print('Congratulations a baby was born!')
-        baby_name = str(randrange(1000))
+        baby_name ='baby' + str(randrange(1000))
         query = 'INSERT INTO animal (name, species, gender, age, weight, cooldown, gestation, is_pregnant) VALUES(?, ?, ?, 0, ?, 0, ?, 0)'
         cursor.execute(query,
                        (baby_name, species, self.generate_random_gender(),
