@@ -52,7 +52,7 @@ def main():
             see_animals(myzoo, cursor)
 
         elif command == 'simulate' or command == 's':
-            interval = int(input('Enter interval of time:'))
+            interval = int(input('Enter interval of time in days:'))
             period = int(input('Enter period:'))
             for x in range (period):
                 simulate(myzoo, interval, period, cursor)
