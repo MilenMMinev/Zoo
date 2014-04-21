@@ -1,6 +1,9 @@
 from animal import Animal
 import unittest
+import sqlite3
 
+conn = sqlite3.connect('animals.db')
+cursor = conn.cursor()
 
 class TestAnimal(unittest.TestCase):
 
@@ -25,23 +28,23 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(50, self.hippo.get_weight())
 
     def test_Get_age(self):
+        self.assertEqual(0, self.tiger.get_age())
+        self.assertEqual(0, self.hippo.get_age())
+
+    def test_grow_by_age(self):
+        self.tiger.grow(365, cursor)
+        self.hippo.grow(365, cursor)
         self.assertEqual(1, self.tiger.get_age())
         self.assertEqual(1, self.hippo.get_age())
 
-    def test_grow_by_age(self):
-        self.tiger.grow(1)
-        self.hippo.grow(1)
-        self.assertEqual(2, self.tiger.get_age())
-        self.assertEqual(2, self.hippo.get_age())
-
     def test_grow_by_weight(self):
-        self.tiger.grow(1)
-        self.hippo.grow(1)
-        self.assertEqual(17, self.tiger.get_weight())
-        self.assertEqual(52.72, self.hippo.get_weight())
+        self.tiger.grow(1*32, cursor)
+        self.hippo.grow(1*32, cursor)
+        self.assertEqual(17, int(self.tiger.get_weight()))
+        self.assertEqual(52, int(self.hippo.get_weight()))
 
     def test_grow_when_average_weight_is_reached(self):
-        self.tiger.grow(30)
+        self.tiger.grow(10000, cursor)
         self.assertEqual(250, self.tiger.get_weight())
 
     def get_food_type(self):
@@ -53,18 +56,16 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(0.06, self.tiger.get_food_weight_ratio())
 
     def test_eat(self):
-        self.assertEqual(1.2, self.tiger.eat())
-        self.assertEqual(2500, self.hippo.eat())
+        self.assertEqual(1.2, self.tiger.eat(1))#amount of food eaten in 1 day
+        self.assertEqual(2500, self.hippo.eat(1))# hippoes are expensive
 
     def test_get_gestation_period(self):
         self.assertEqual(4, self.tiger.get_gestation_period())
         self.assertEqual(8, self.hippo.get_gestation_period())
 
-    def test_ready_to_reproduce(self):
-        self.assertFalse(self.tiger.ready_to_reproduce())
-
-    def test_ready_to_give_birth(self):
-        self.assertFalse(self.tiger.ready_to_give_birth())
+    def test_death_when_age_is_above_average(self):
+        self.tiger.grow(10000, cursor)
+        self.assertTrue(self.tiger.die())
 
 
 
